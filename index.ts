@@ -71,8 +71,44 @@ async function main() {
   //   },
   // })
 
+  // emailのupdate 
+  // const updateUser = await prisma.user.update({
+  //   where: {
+  //     email: 'viola@prisma.io',
+  //   },
+  //   data: {
+  //     name: 'Viola the Magnificent',
+  //   },
+  // })
+
+  // 該当するemailアドレス全てのUserのrおleをupdateする
+  // const updateUsers = await prisma.user.updateMany({
+  //   where: {
+  //     email: {
+  //       contains: 'prisma.io',
+  //     },
+  //   },
+  //   data: {
+  //     role: 'ADMIN',
+  //   },
+  // })
+
+  // whereでデータが存在すればupdateを存在しなければクリエイトを行う
+  const upsertUser = await prisma.user.upsert({
+    where: {
+      email: 'viola@prisma.io',
+    },
+    update: {
+      name: 'Viola the Magnificent',
+    },
+    create: {
+      email: 'viola@prisma.io',
+      name: 'Viola the Magnificent',
+    },
+  })
+
   // コンソールによる確認
-  console.dir(getUser)
+  console.dir(upsertUser)
 }
 
 // mainメソッドの実行とエラーの出力
