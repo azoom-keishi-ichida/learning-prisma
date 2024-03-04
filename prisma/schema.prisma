@@ -14,8 +14,11 @@ model User {
   role    Role     @default(USER)
   posts   Post[]
   profile Profile?
+  organization  Organization  @relation(fields: [OrganizationId], references: [id])
+  OrganizationId Int    @unique @map("organization_id")
 
    @@map("users")
+   @@index([name])
 }
 
 model Profile {
@@ -25,6 +28,7 @@ model Profile {
   userId Int    @unique @map("user_id")
 
   @@map("profiles")
+  @@index([bio])
 }
 
 model Post {
@@ -38,6 +42,7 @@ model Post {
   categories Category[]
 
   @@map("posts")
+  @@index([title,authorId])
 }
 
 model Category {
@@ -46,6 +51,21 @@ model Category {
   posts Post[]
 
   @@map("categories")
+  @@index([name])
+}
+
+model Organization {
+  id Int @id @default(autoincrement())
+  name String
+  status State @default(PUBLISDED)
+  users User[]
+
+  @@index([name, status])
+}
+
+enum State {
+  ARCHIVED
+  PUBLISDED
 }
 
 enum Role {
