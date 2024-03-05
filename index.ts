@@ -234,8 +234,106 @@ async function main() {
   //   },
   // })
 
+  // フィルターしたデータを出力
+  // const result = await prisma.user.findMany({
+  //   where: {
+  //     email: {
+  //       endsWith: 'prisma.io',
+  //     },
+  //     posts: {
+  //       some: {
+  //         published: true,
+  //       },
+  //     },
+  //   },
+  //   include: {
+  //     posts: {
+  //       where: {
+  //         published: true,
+  //       },
+  //     },
+  //   },
+  // })
+
+  // フィルタリングの条件変更
+  // const result = await prisma.user.findMany({
+  //   where: {
+  //     OR: [
+  //       {
+  //         email: {
+  //           endsWith: 'prisma.io',
+  //         },
+  //       },
+  //       { email: { endsWith: 'gmail.com' } },
+  //     ],
+  //     NOT: {
+  //       email: {
+  //         endsWith: 'hotmail.com',
+  //       },
+  //     },
+  //   },
+  //   // 指定したカラムのみを取得（trueにすると指定になる）
+  // MEMO: selectとincludeを併用することはできない
+  //   select: {
+  //     email: true,
+  //   },
+  // })
+
+  // nullをフィルタリング
+  // const posts = await prisma.post.findMany({
+  //   where: {
+  //     content: null,
+  //   },
+  // })
+
+  // 　このデータの条件をもとに該当する親の情報を持ってくる
+  // const result = await prisma.user.findMany({
+  //   where: {
+  //     posts: {
+  //       some: {
+  //         views: {
+  //           gt: 10,
+  //         },
+  //       },
+  //     },
+  //   },
+  // })
+
+  // ソートを行う
+  // const orderPost = await prisma.post.findMany({
+  //   orderBy: {
+  //     id: 'desc',
+  //   },
+  // })
+
+  // userに関連するpostのカウントでソートしている
+  // const getActiveUsers = await prisma.user.findMany({
+  //   orderBy: {
+  //     posts: {
+  //       _count: 'desc',
+  //     },
+  //   },
+  // })
+
+  //上位10このデータだけを取得し、postの数でソートを行う
+  // const getActiveUsers = await prisma.user.findMany({
+  //   take: 10,
+  //   orderBy: {
+  //     posts: {
+  //       _count: 'desc',
+  //     },
+  //   },
+  // })
+
+  // postのupdatedAtでソートを行い、nullを一番最後に持ってくる
+  // const posts = await prisma.post.findMany({
+  //   orderBy: {
+  //     updatedAt: { sort: 'asc', nulls: 'last' },
+  //   },
+  // })
+
   // コンソールによる確認
-  console.dir(UserWithCategories?.categories)
+  console.dir()
 }
 
 // mainメソッドの実行とエラーの出力
