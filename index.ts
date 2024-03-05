@@ -476,10 +476,74 @@ async function main() {
   // })
 
   // チェインメソッドみたいに書く方法
-  const postsByUser = await prisma.user.findUnique({ where: { id: 22 } }).posts()
+  // const postsByUser = await prisma.user.findUnique({ where: { id: 22 } }).posts()
+
+  // 検索と表示数を指定
+  // const results = await prisma.post.findMany({
+  //   skip: 40,
+  //   take: 10,
+  //   where: {
+  //     title: {
+  //       contains: 'prisma.io',
+  //     },
+  //   },
+  // })
+
+  // ページネーションで使うであろうcursorで次の指定を行う
+  // const myOldCursor = 200
+  // const firstQueryResults = await prisma.post.findMany({
+  //   take: -4,
+  //   skip: 1,
+  //   cursor: {
+  //     id: myOldCursor,
+  //   },
+  //   where: {
+  //     title: {
+  //       contains: 'Prisma' /* Optional filter */,
+  //     },
+  //   },
+  //   orderBy: {
+  //     id: 'asc',
+  //   },
+  // })
+
+  // 自動トランザクション
+  // const newUser = await prisma.user.create({
+  //   data: {
+  //     email: 'alice@prisma.io',
+  //     posts: {
+  //       create: [
+  //         { title: 'Join the Prisma Slack on https://slack.prisma.io' },
+  //         { title: 'Follow @prisma on Twitter' },
+  //       ],
+  //     },
+  //   },
+  // })
+
+  // 手動でトランザクションをかける(rollbackも含める)
+  const [user, post, totalPosts] = await prisma.$transaction([
+    prisma.user.create({
+      data: {
+        name: 'mike',
+        email: 'mike@example.com',
+        profile: {
+          create: {
+            bio: 'I like turtles',
+          },
+        },
+      },
+    }),
+    prisma.post.create({
+      data: {
+        title: 'sample post',
+      },
+    }),
+    prisma.post.count(),
+  ])
 
   // ログの出力
-  console.dir(postsByUser)
+  console.dir({ user, post })
+  console.dir(totalPosts)
 }
 
 // mainメソッドの実行とエラーの出力
