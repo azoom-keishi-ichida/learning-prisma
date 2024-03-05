@@ -38,8 +38,11 @@ model Post {
   published Boolean  @default(false) @map("is_published")
   title     String   @db.VarChar(255) @map("post_title")
   author    User?    @relation(fields: [authorId], references: [id])
+  views Int @default(0) @map("views")
+  likes Int @default(0)
   authorId  Int?     @map("author_id")
   categories Category[]
+
 
   @@map("posts")
   @@index([title,authorId])

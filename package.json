@@ -18,6 +18,7 @@
   "dependencies": {
     "@prisma/client": "^5.3.1",
     "install": "^0.13.0",
-    "studio": "^0.13.5"
+    "studio": "^0.13.5",
+    "tsc": "^2.0.4"
   }
 }
